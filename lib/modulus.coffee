@@ -4,7 +4,7 @@ module.exports =
   modulusView: null
 
   activate: (state) ->
-    @modulusView = new ModulusView(state.gistViewState)
+    @modulusView = new ModulusView(state.modulusViewState)
 
   deactivate: ->
     @modulusView.destroy()
@@ -13,4 +13,4 @@ module.exports =
     modulusViewState: @modulusView.serialize()
 
   configDefaults:
-    ApiToken: ''
+    apiToken: ''
