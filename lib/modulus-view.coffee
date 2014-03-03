@@ -19,9 +19,9 @@ class ModulusView extends View
     librarian.init 'api.onmodulus.net', 443, true
     @handleEvents()
     @event = ''
-    atom.workspaceView.command "modulus:start", => @start()
-    atom.workspaceView.command "modulus:stop", => @stop()
-    atom.workspaceView.command "modulus:restart", => @restart()
+    atom.workspaceView.command 'modulus:start', => @start()
+    atom.workspaceView.command 'modulus:stop', => @stop()
+    atom.workspaceView.command 'modulus:restart', => @restart()
 
   serialize: ->
 
