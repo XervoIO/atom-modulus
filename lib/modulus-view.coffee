@@ -14,8 +14,11 @@ class ModulusView extends View
             @subview 'projectNameEditor', new EditorView(mini:true, placeholderText: 'Project Name')
             @div class: 'pull-right', =>
               @button outlet: 'goButton', class: 'btn btn-primary', 'Go'
+          @div outlet: 'progressIndicator', =>
+            @span class: 'loading loading-spinner-medium'
 
   initialize: (serializeState) ->
+    console.log 'initialize'
     librarian.init 'api.onmodulus.net', 443, true
     @handleEvents()
     @event = ''
@@ -30,6 +33,8 @@ class ModulusView extends View
 
   handleEvents: ->
     @goButton.on 'click', => @go()
+    @projectNameEditor.on 'core:confirm', => @go()
+    @projectNameEditor.on 'core:cancel', => @detach()
 
   start: ->
     @event = 'start'
@@ -50,6 +55,8 @@ class ModulusView extends View
     @presentSelf()
 
   presentSelf: ->
+    @projectNameEditor.setText ''
+    @progressIndicator.hide()
     @projectForm.show()
 
     atom.workspaceView.append(this)
@@ -62,9 +69,33 @@ class ModulusView extends View
       else
         return fn(null, user)
 
+  getProject: (user, name, fn) ->
+    result = null
+    librarian.project.find { userId: user.id }, atom.config.get('atom-modulus.apiToken'), (err, projects) ->
+      if err
+        return fn(err)
+
+      projects.forEach (project) ->
+        if project.name.toLowerCase() == name.toLowerCase()
+          result = project
+
+      fn(null, result)
+
   go: ->
-    # TODO: Add a progress indicator?
+    @projectForm.hide()
+    @progressIndicator.show()
+
     @project = @projectNameEditor.getText()
     @getUser (err, user) =>
-      # TODO: run the selected command.
-      @detach()
+      @getProject user, @projectNameEditor.getText(), (err, project) =>
+        if @event == 'start'
+          librarian.project.start project.id, atom.config.get('atom-modulus.apiToken'), =>
+            @detach()
+
+        if @event == 'restart'
+          librarian.project.restart project.id, atom.config.get('atom-modulus.apiToken'), =>
+            @detach()
+
+        if @event == 'stop'
+          librarian.project.stop project.id, atom.config.get('atom-modulus.apiToken'), =>
+            @detach()

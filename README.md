@@ -5,9 +5,10 @@ Manage your Modulus projects from within Atom.
 
 # Usage
 
-Using the [Modulus CLI](https://http://npm.im/modulus), generate an API token.
-Open the Atom settings and add your API token to the Modulus package. Using the
-Atom command pallete (cmd+shift+p), run any of the following commands:
+[Create an API token](https://modulus.io/codex/cli/reference/token_commands)
+using the [Modulus CLI](https://http://npm.im/modulus). Open the Atom settings
+and add your API token to the Atom-Modulus package. Using the Atom command
+palette (cmd+shift+p), run any of the following commands:
 
 * Modulus:start
 * Modulus:stop
