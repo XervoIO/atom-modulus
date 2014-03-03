@@ -1,40 +1,16 @@
-
-path = require('path')
-
-request = require('request')
-
-modulusApi = require('./modulus-api')
+ModulusView = require './modulus-view'
 
 module.exports =
-
-  configDefaults:
-    ApiToken: ""
-    UserId: ""
+  modulusView: null
 
   activate: (state) ->
+    @modulusView = new ModulsView(state.gistViewState)
 
-    atom.workspaceView.command "modulus:start", => @start()
+  deactivate: ->
+    @modulusView.destroy()
 
-    atom.workspaceView.command "modulus:stop", => @stop()
+  serialize: ->
+    modulusViewState: @modulusView.serialize()
 
-  getProjectName: ->
-
-    projectPath = atom.project.getPath()
-
-    packagejson = require(atom.project.getPath() + '/package.json')
-
-    if packagejson["mod-project-name"]
-
-      return packagejson["mod-project-name"]
-
-    else
-
-      throw Error('No mod project name')
-
-  start: ->
-
-    modulusApi.start(atom.config.get('modulus.UserId'), atom.config.get('modulus.ApiToken'), @.getProjectName())
-
-  stop: ->
-
-    modulusApi.stop(atom.config.get('modulus.UserId'), atom.config.get('modulus.ApiToken'), @.getProjectName())
+  configDefaults:
+    ApiToken: ''

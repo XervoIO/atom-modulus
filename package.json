@@ -4,14 +4,15 @@
   "version": "0.0.0",
   "private": true,
   "description": "A short description of your package",
-  "activationEvents": ["modulus:start", "modulus:stop"],
-  "repository": "https://github.com/atom/modulus",
+  "activationEvents": [
+    "modulus:start",
+    "modulus:stop",
+    "modulus:restart"
+  ],
+  "repository": "https://github.com/onmodulus/atom-modulus",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
-  "dependencies": {
-    "request": "2.33.0",
-    "q": "latest"
-  }
+  "dependencies": {}
 }
