@@ -3,7 +3,7 @@
   "main": "./lib/modulus",
   "version": "0.0.0",
   "private": true,
-  "description": "A short description of your package",
+  "description": "Manage your Modulus projects from within Atom.",
   "activationEvents": [
     "modulus:start",
     "modulus:stop",
