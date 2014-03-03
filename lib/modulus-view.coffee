@@ -33,16 +33,19 @@ class ModulusView extends View
 
   start: ->
     @event = 'start'
+    @goButton.text 'Start'
     @title.text 'Start A Project'
     @presentSelf()
 
   stop: ->
     @event = 'stop'
+    @goButton.text 'Stop'
     @title.text 'Stop A Project'
     @presentSelf()
 
   restart: ->
     @event = 'restart'
+    @goButton.text 'Restart'
     @title.text 'Restart A Project'
     @presentSelf()
 
