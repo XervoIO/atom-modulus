@@ -4,7 +4,7 @@ module.exports =
   modulusView: null
 
   activate: (state) ->
-    @modulusView = new ModulsView(state.gistViewState)
+    @modulusView = new ModulusView(state.gistViewState)
 
   deactivate: ->
     @modulusView.destroy()
