@@ -3,15 +3,18 @@
   "main": "./lib/modulus",
   "version": "0.0.0",
   "private": true,
-  "description": "A short description of your package",
-  "activationEvents": ["modulus:start", "modulus:stop"],
-  "repository": "https://github.com/atom/modulus",
+  "description": "Manage your Modulus projects from within Atom.",
+  "activationEvents": [
+    "modulus:start",
+    "modulus:stop",
+    "modulus:restart"
+  ],
+  "repository": "https://github.com/onmodulus/atom-modulus",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
   "dependencies": {
-    "request": "2.33.0",
-    "q": "latest"
+    "underscore": "^1.6.0"
   }
 }

@@ -1,40 +1,37 @@
+# Copyright (c) 2014 Modulus
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-path = require('path')
-
-request = require('request')
-
-modulusApi = require('./modulus-api')
+ModulusView = require './modulus-view'
 
 module.exports =
-
-  configDefaults:
-    ApiToken: ""
-    UserId: ""
+  modulusView: null
 
   activate: (state) ->
+    @modulusView = new ModulusView(state.modulusViewState)
 
-    atom.workspaceView.command "modulus:start", => @start()
+  deactivate: ->
+    @modulusView.destroy()
 
-    atom.workspaceView.command "modulus:stop", => @stop()
+  serialize: ->
+    modulusViewState: @modulusView.serialize()
 
-  getProjectName: ->
-
-    projectPath = atom.project.getPath()
-
-    packagejson = require(atom.project.getPath() + '/package.json')
-
-    if packagejson["mod-project-name"]
-
-      return packagejson["mod-project-name"]
-
-    else
-
-      throw Error('No mod project name')
-
-  start: ->
-
-    modulusApi.start(atom.config.get('modulus.UserId'), atom.config.get('modulus.ApiToken'), @.getProjectName())
-
-  stop: ->
-
-    modulusApi.stop(atom.config.get('modulus.UserId'), atom.config.get('modulus.ApiToken'), @.getProjectName())
+  configDefaults:
+    apiToken: ''
