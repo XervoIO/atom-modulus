@@ -85,7 +85,7 @@ class ModulusView extends View
     @projectNameEditor.focus()
 
   getUser: (fn) ->
-    librarian.user.getForToken atom.config.get('atom-modulus.apiToken'), (err, user) ->
+    librarian.user.getForToken atom.config.get('modulus.apiToken'), (err, user) ->
       if err
         return fn(err)
       else
@@ -93,7 +93,7 @@ class ModulusView extends View
 
   getProject: (user, name, fn) ->
     result = null
-    librarian.project.find { userId: user.id }, atom.config.get('atom-modulus.apiToken'), (err, projects) ->
+    librarian.project.find { userId: user.id }, atom.config.get('modulus.apiToken'), (err, projects) ->
       if err
         return fn(err)
 
@@ -111,13 +111,13 @@ class ModulusView extends View
     @getUser (err, user) =>
       @getProject user, @projectNameEditor.getText(), (err, project) =>
         if @event == 'start'
-          librarian.project.start project.id, atom.config.get('atom-modulus.apiToken'), =>
+          librarian.project.start project.id, atom.config.get('modulus.apiToken'), =>
             @detach()
 
         if @event == 'restart'
-          librarian.project.restart project.id, atom.config.get('atom-modulus.apiToken'), =>
+          librarian.project.restart project.id, atom.config.get('modulus.apiToken'), =>
             @detach()
 
         if @event == 'stop'
-          librarian.project.stop project.id, atom.config.get('atom-modulus.apiToken'), =>
+          librarian.project.stop project.id, atom.config.get('modulus.apiToken'), =>
             @detach()
