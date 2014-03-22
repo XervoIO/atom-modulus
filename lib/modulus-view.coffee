@@ -113,7 +113,7 @@ class ModulusView extends View
         return @detach()
 
       @getProject user, @projectNameEditor.getText(), (err, project) =>
-        if err
+        if err or project is null
           return @detach()
 
         if @event == 'start'
