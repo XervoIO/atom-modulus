@@ -109,7 +109,13 @@ class ModulusView extends View
 
     @project = @projectNameEditor.getText()
     @getUser (err, user) =>
+      if err
+        return @detach()
+
       @getProject user, @projectNameEditor.getText(), (err, project) =>
+        if err
+          return @detach()
+
         if @event == 'start'
           librarian.project.start project.id, atom.config.get('modulus.apiToken'), =>
             @detach()
